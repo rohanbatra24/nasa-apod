@@ -1,6 +1,6 @@
 const resultsNav = document.getElementById("resultsNav");
 const favoritesNav = document.getElementById("favoritesNav");
-const imagesContainer = document.querySelector("images-container");
+const imagesContainer = document.querySelector(".images-container");
 const saveConfirmed = document.querySelector("save-confirmed");
 const loader = document.querySelector(".loader");
 
@@ -25,7 +25,7 @@ const updateDOM = (params) => {
     link.target = "_blank";
     // image
     const image = document.createElement("img");
-    image.src = img.apiUrl;
+    image.src = img.hdurl;
     image.loading = "lazy";
     image.classList.add("card-img-top");
     // card body
@@ -54,9 +54,10 @@ const updateDOM = (params) => {
 
     // append
     footer.append(date, copyright);
-    cardBody.append(cardTitle, cardText, saveText, footer);
-    link.appendChild(img);
+    cardBody.append(cardTitle, saveText, cardText, footer);
+    link.appendChild(image);
     card.append(link, cardBody);
+    imagesContainer.appendChild(card);
   });
 };
 
@@ -65,7 +66,8 @@ const getNASAPictures = async (params) => {
   try {
     const response = await fetch(apiUrl);
     responseArray = await response.json();
-    console.log(`images`, responseArray);
+    resultsArray = responseArray;
+    console.log(`resultsArray`, resultsArray);
     updateDOM();
   } catch (error) {
     console.log(`error`, error);
